@@ -683,7 +683,7 @@ public class GameScreen implements Screen{
                         ambientacao += 5;
                         killBoss = true;
 
-                        /* if(currentBossLevel == 3){
+                        if(currentBossLevel == 3){
                             new Thread(() -> {
                                 try {
                                     Thread.sleep(4000); 
@@ -692,13 +692,13 @@ public class GameScreen implements Screen{
                                     e.printStackTrace();
                                 }
                             }).start();
-                        } */
+                        }
                     
                         
 
                         currentBossLevelDeath = currentBossLevel;
 
-                        /* if (currentBossLevel == 3 && obj.health <= 0) {
+                        if (currentBossLevel == 3 && obj.health <= 0) {
                             showVictoryPlate = true;
                             victoryPlateTimer = VICTORY_PLATE_DURATION;
                             
@@ -717,7 +717,7 @@ public class GameScreen implements Screen{
                             }
 
                             
-                        } */
+                        }
 
                     }
                     break;
@@ -743,13 +743,6 @@ public class GameScreen implements Screen{
             System.out.println("Boss ativado");
             objects.clear();
             spawnBoss(300, 300, 3);
-            activeBoss = true;
-        }
-
-        if(score == 200 && !activeBoss){
-            System.out.println("Boss ativado");
-            objects.clear();
-            spawnBoss(500, 500, 4);
             activeBoss = true;
         }
 
