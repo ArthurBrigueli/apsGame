@@ -1,0 +1,12 @@
+{
+    "platform": "windows64",
+    "jdk": "C:\\jdk-11.0.26+4",
+    "executable": "MeuApp",
+    "classpath": ["lwjgl3/build/libs/runninginfinityaps-1.0.0"],
+    "mainclass": "com.gameapps.game.lwjgl3.Lwjgl3Launcher",
+    "vmargs": ["-Xmx1G"],
+    "resources": ["assets"],
+    "output": "C:/mygameaps",
+    "icon": "icon.ico"
+  }
+  
