@@ -36,6 +36,9 @@ public class TextureMain {
     public Texture pressKeyLeftTexture;
     public Texture pressKeyRightTexture;
 
+    public Texture bossDevilTexture;
+
+
 
 
     public TextureMain(){
@@ -44,6 +47,13 @@ public class TextureMain {
 
 
     private void loadTexture(){
+
+
+        //devil boss
+        bossDevilTexture = new Texture("bossDevil/idle/devil_idle_0001.png");
+
+
+
         obstacleTexture = new Texture("obstaculo.png");
         coinTexture = new Texture("coin.png");
         enemyTexture = new Texture("enemy.png");
@@ -110,6 +120,10 @@ public class TextureMain {
 
         pressKeyLeftTexture.dispose();
         pressKeyRightTexture.dispose();
+
+
+        //depose devil boss
+        bossDevilTexture.dispose();
     }
     
 

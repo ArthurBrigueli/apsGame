@@ -138,6 +138,7 @@ public class GameScreen implements Screen{
 
 
     private Texture fundoLongeTexture;
+    private Texture bossDevilTexture;
     private final float speedIncreaseAmountFundoLonge = 10f;
     private final float maxSpeedFundoLonge = 200f;
     private final int speedIncreaseIntervalFundoLonge = 3;
@@ -152,6 +153,10 @@ public class GameScreen implements Screen{
 
 
     private boolean showTutorial = false;
+
+
+    private Boss boss;
+    private boolean closeBackground;
 
     public GameScreen(Game game, TextureMain textureMain, GameSounds gameSounds) {
         this.game = game;
@@ -180,9 +185,13 @@ public class GameScreen implements Screen{
         player = new Player(210, 110);
 
         chaoTexture = textureMain.chaoTexture;
-        fundoLongeTexture = textureMain.fundoLongeTexture;
+
         
+        fundoLongeTexture = textureMain.fundoLongeTexture;
+        boss = new Boss();
         backgroundTexture = textureMain.backgroundTexture1;
+
+
         bossTexture = textureMain.enemyTrashBossTexture;
 
 
@@ -269,9 +278,17 @@ public class GameScreen implements Screen{
         batch.draw(fundoLongeTexture, longe2, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
-        batch.draw(backgroundTexture, fundo1, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(backgroundTexture, fundo2, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //batch.draw(bossDevilTexture, Gdx.graphics.getWidth()/8,Gdx.graphics.getHeight()/14, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        
+        batch.draw(boss.getCurrentFrame(), Gdx.graphics.getWidth()/8,Gdx.graphics.getHeight()/14, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if (closeBackground && !boss.isAttacking() && !boss.isAttackCompleted()) {
+            boss.requestAttack();
+        }
 
+        if(!closeBackground){
+            batch.draw(backgroundTexture, fundo1, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.draw(backgroundTexture, fundo2, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         batch.draw(chaoTexture, chao1, 0, Gdx.graphics.getWidth(), 110);
         batch.draw(chaoTexture, chao2, 0, Gdx.graphics.getWidth(), 110);
@@ -332,6 +349,7 @@ public class GameScreen implements Screen{
                     batch.draw(textureMain.pressKeyInterativeTexture, x, y, textureWidth, textureHeight);
                 
                     if(Gdx.input.isKeyJustPressed(Input.Keys.E)){
+
 
                         killBoss = false;
                         freeMode = false;
@@ -537,6 +555,14 @@ public class GameScreen implements Screen{
             player.jump(gameOver);
         }
 
+
+        boss.update(deltaTime);
+
+        if (closeBackground) {
+            closeBackground = false;
+            // Reseta o estado de ataque quando o background fecha pela primeira vez
+            boss.resetAttackState();
+        }
         
 
 
@@ -699,8 +725,8 @@ public class GameScreen implements Screen{
                         currentBossLevelDeath = currentBossLevel;
 
                         if (currentBossLevel == 3 && obj.health <= 0) {
-                            showVictoryPlate = true;
-                            victoryPlateTimer = VICTORY_PLATE_DURATION;
+                            //showVictoryPlate = true;
+                            //victoryPlateTimer = VICTORY_PLATE_DURATION;
                             
                             objects.clear();
                             activeBoss = false;
@@ -708,8 +734,8 @@ public class GameScreen implements Screen{
                             if(currentBossLevel == 3){
                                 new Thread(() -> {
                                     try {
-                                        Thread.sleep(4000); 
-                                        gameOver = true;
+                                        Thread.sleep(4000);
+                                        closeBackground = true;
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
@@ -728,21 +754,21 @@ public class GameScreen implements Screen{
         if(score == 20 && !activeBoss){
             System.out.println("Boss ativado");
             objects.clear();
-            spawnBoss(100, 100, 1);
+            spawnBoss(50, 50, 1);
             activeBoss = true;
         }
 
         if(score == 80 && !activeBoss){
             System.out.println("Boss ativado");
             objects.clear();
-            spawnBoss(200, 200, 2);
+            spawnBoss(50, 50, 2);
             activeBoss = true;
         }
 
         if(score == 150 && !activeBoss){
             System.out.println("Boss ativado");
             objects.clear();
-            spawnBoss(300, 300, 3);
+            spawnBoss(50, 50, 3);
             activeBoss = true;
         }
 
