@@ -156,7 +156,7 @@ public class GameScreen implements Screen{
 
 
     private Boss boss;
-    private boolean closeBackground;
+    private boolean closeBackground = false;
 
     public GameScreen(Game game, TextureMain textureMain, GameSounds gameSounds) {
         this.game = game;
@@ -334,10 +334,10 @@ public class GameScreen implements Screen{
 
         if(killBoss){
             objects.clear();
-            textDeathBoss.render(currentBossLevel, plateDeathBossTexture);
-
-            if(currentBossLevel != 5){
-                freeMode = true;
+            
+            freeMode = true;
+            if(currentBossLevel != 3){
+                textDeathBoss.render(currentBossLevel, plateDeathBossTexture);
 
 
                 if(player.getHitbox().overlaps(textDeathBoss.getHitbox())) {
@@ -559,10 +559,14 @@ public class GameScreen implements Screen{
         boss.update(deltaTime);
 
         if (closeBackground) {
-            closeBackground = false;
-            // Reseta o estado de ataque quando o background fecha pela primeira vez
-            boss.resetAttackState();
+            freeMode = true; // Ativa o modo livre
+            objects.clear(); // Limpa todos os objetos
         }
+
+        /* if (closeBackground) {
+            freeMode = true; // Ativa o modo livre quando o background fecha
+            objects.clear(); // Limpa todos os objetos
+        } */
         
 
 
@@ -709,16 +713,7 @@ public class GameScreen implements Screen{
                         ambientacao += 5;
                         killBoss = true;
 
-                        if(currentBossLevel == 3){
-                            new Thread(() -> {
-                                try {
-                                    Thread.sleep(4000); 
-                                    killBoss = false;
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }).start();
-                        }
+                        
                     
                         
 
@@ -732,14 +727,7 @@ public class GameScreen implements Screen{
                             activeBoss = false;
 
                             if(currentBossLevel == 3){
-                                new Thread(() -> {
-                                    try {
-                                        Thread.sleep(4000);
-                                        closeBackground = true;
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }).start();
+                                closeBackground = true;
                             }
 
                             
