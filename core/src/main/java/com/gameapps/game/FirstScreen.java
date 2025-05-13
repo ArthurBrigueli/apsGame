@@ -35,15 +35,15 @@ public class FirstScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         
-        // Carrega o background (substitua pelo seu arquivo real)
+
         background = new Texture(Gdx.files.internal("cenario1.png"));
         
-        // Configura o estilo do botão
+
         TextButtonStyle buttonStyle = new TextButtonStyle();
         buttonStyle.font = font;
         buttonStyle.fontColor = Color.WHITE;
         
-        // Cria o botão de iniciar
+
         TextButton startButton = new TextButton("INICIAR JOGO", buttonStyle);
         startButton.setSize(400, 100);
         startButton.setPosition(
@@ -51,11 +51,9 @@ public class FirstScreen implements Screen {
             Gdx.graphics.getHeight()/2 - startButton.getHeight()/2
         );
         
-        // Adiciona o listener para o botão
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // Garante que o jogo está pronto antes de mostrar
                 game.setScreen(gameScreen);
             }
         });
@@ -80,7 +78,7 @@ public class FirstScreen implements Screen {
                  Gdx.graphics.getHeight() - 50);
         batch.end();
         
-        // Atualiza e desenha a UI
+
         stage.act(delta);
         stage.draw();
     }

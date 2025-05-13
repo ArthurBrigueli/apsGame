@@ -13,7 +13,7 @@ public class Boss {
     private float stateTime;
     private boolean isAttacking = false;
     private boolean attackCompleted = false;
-    private final float ATTACK_DURATION = 1.5f; // Duração total do ataque em segundos
+    private final float ATTACK_DURATION = 1.5f; 
     private boolean attackRequested = false;
 
     public Boss() {
@@ -23,7 +23,7 @@ public class Boss {
     }
 
     private void loadAnimations() {
-        // Animação Idle (loop)
+
         Array<TextureRegion> idleFrames = new Array<>();
         for (int i = 1; i <= 36; i++) {
             String framePath = String.format("bossDevil/idle/devil_idle_%04d.png", i);
@@ -31,14 +31,14 @@ public class Boss {
         }
         animationIdle = new Animation<>(0.07f, idleFrames, Animation.PlayMode.LOOP);
 
-        // Animação Ataque (executa uma vez)
+
         Array<TextureRegion> attackFrames = new Array<>();
-        // Frames do ataque reverso (16 a 1)
+
         for (int i = 16; i >= 1; i--) {
             String framePath = String.format("bossDevil/Intro/devil_ph1_intro_%04d.png", i);
             attackFrames.add(new TextureRegion(new Texture(Gdx.files.internal(framePath))));
         }
-        // Frames do ataque normal (1 a 16)
+
         for (int i = 1; i <= 16; i++) {
             String framePath = String.format("bossDevil/Intro/devil_ph1_intro_%04d.png", i);
             attackFrames.add(new TextureRegion(new Texture(Gdx.files.internal(framePath))));
@@ -51,7 +51,7 @@ public class Boss {
             isAttacking = true;
             attackCompleted = false;
             currentAnimation = animationAttack;
-            stateTime = 0f; // Reinicia o tempo da animação
+            stateTime = 0f; 
         }
     }
 

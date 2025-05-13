@@ -1,0 +1,9 @@
+{
+    "platform": "windows64", 
+    "jdk": "C:/zulu11.80.21-ca-jre11.0.27-win_x64.zip",
+    "executable": "APSGAME",
+    "classpath": ["lwjgl3/build/libs/runninginfinityaps-1.0.0.jar"],
+    "mainclass": "com.gameapps.game.lwjgl3.Lwjgl3Launcher",
+    "vmargs": ["Xmx1G"],
+    "output": "APSGAME-Windows"
+}

@@ -71,7 +71,7 @@ public class GameScreen implements Screen{
 
 
 
-    //bullet
+
     private Array<Bullet> bullets;
     private float bulletSpeed = 600f; 
 
@@ -88,20 +88,20 @@ public class GameScreen implements Screen{
 
 
 
-    //movimento do boss
-
-    private float BOSS_MOVE_SPEED = 150f; // Velocidade de movimento do boss
 
 
+    private float BOSS_MOVE_SPEED = 150f;
 
-    private final float BOSS_SHOOT_INTERVAL = 2f; // Intervalo entre disparos
+
+
+    private final float BOSS_SHOOT_INTERVAL = 2f;
     private float bossShootTimer = 0f;
     private Array<BossBullet> bossBullets;
 
 
 
     private int currentBossLevel = 0;
-    //plate victory
+
     private boolean showVictoryPlate = false;
     private float victoryPlateTimer = 0;
     private final float VICTORY_PLATE_DURATION = 3f;
@@ -138,7 +138,6 @@ public class GameScreen implements Screen{
 
 
     private Texture fundoLongeTexture;
-    private Texture bossDevilTexture;
     private final float speedIncreaseAmountFundoLonge = 10f;
     private final float maxSpeedFundoLonge = 200f;
     private final int speedIncreaseIntervalFundoLonge = 3;
@@ -155,8 +154,8 @@ public class GameScreen implements Screen{
     private boolean showTutorial = false;
 
 
-    private Boss boss;
-    private boolean closeBackground = false;
+    /* private Boss boss;
+    private boolean closeBackground = false; */
 
     public GameScreen(Game game, TextureMain textureMain, GameSounds gameSounds) {
         this.game = game;
@@ -188,7 +187,7 @@ public class GameScreen implements Screen{
 
         
         fundoLongeTexture = textureMain.fundoLongeTexture;
-        boss = new Boss();
+        /* boss = new Boss(); */
         backgroundTexture = textureMain.backgroundTexture1;
 
 
@@ -200,7 +199,7 @@ public class GameScreen implements Screen{
 
 
 
-        //bullet
+
         bullets = new Array<>();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -210,10 +209,10 @@ public class GameScreen implements Screen{
         shapeRenderer = new ShapeRenderer();
 
 
-        //plate victory
+
         victoryPlateGui = new VictoryPlateGui(batch);
 
-        //text death boss
+
         textDeathBoss = new TextDeathBoss(batch);
 
         textDeathBoss.create();
@@ -280,7 +279,7 @@ public class GameScreen implements Screen{
 
         //batch.draw(bossDevilTexture, Gdx.graphics.getWidth()/8,Gdx.graphics.getHeight()/14, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
-        batch.draw(boss.getCurrentFrame(), Gdx.graphics.getWidth()/8,Gdx.graphics.getHeight()/14, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        /* batch.draw(boss.getCurrentFrame(), Gdx.graphics.getWidth()/8,Gdx.graphics.getHeight()/14, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if (closeBackground && !boss.isAttacking() && !boss.isAttackCompleted()) {
             boss.requestAttack();
         }
@@ -288,7 +287,10 @@ public class GameScreen implements Screen{
         if(!closeBackground){
             batch.draw(backgroundTexture, fundo1, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             batch.draw(backgroundTexture, fundo2, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        }
+        } */
+
+        batch.draw(backgroundTexture, fundo1, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(backgroundTexture, fundo2, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch.draw(chaoTexture, chao1, 0, Gdx.graphics.getWidth(), 110);
         batch.draw(chaoTexture, chao2, 0, Gdx.graphics.getWidth(), 110);
@@ -315,30 +317,30 @@ public class GameScreen implements Screen{
                     bullet.texture,
                     bullet.rect.x,
                     bullet.rect.y,
-                    bullet.rect.width/2,  // originX (ponto de rotação no centro)
-                    bullet.rect.height/2, // originY
+                    bullet.rect.width/2,  
+                    bullet.rect.height/2, 
                     bullet.rect.width,
                     bullet.rect.height,
-                    1f,  // scaleX
-                    1f,  // scaleY
+                    1f,  
+                    1f,  
                     rotation,
-                    0,   // srcX
-                    0,   // srcY
-                    bullet.texture.getWidth(),  // srcWidth
-                    bullet.texture.getHeight(), // srcHeight
-                    false, // flipX
-                    false  // flipY
+                    0,   
+                    0,   
+                    bullet.texture.getWidth(),  
+                    bullet.texture.getHeight(), 
+                    false, 
+                    false 
                 );
             }
         }
 
         if(killBoss){
             objects.clear();
+            textDeathBoss.render(currentBossLevel, plateDeathBossTexture);
             
-            freeMode = true;
-            if(currentBossLevel != 3){
-                textDeathBoss.render(currentBossLevel, plateDeathBossTexture);
-
+            if(currentBossLevel != 5){
+                freeMode = true;
+            
 
                 if(player.getHitbox().overlaps(textDeathBoss.getHitbox())) {
                     float textureWidth = 30;
@@ -365,7 +367,7 @@ public class GameScreen implements Screen{
         }
 
 
-        //condição para desenhar a placa do nome do boss
+
         if (bossTextTimer > 0 && currentBossTextTexture != null) {
 
             float scaledWidth = currentBossTextTexture.getWidth() * BOSS_TEXT_SCALE;
@@ -380,14 +382,14 @@ public class GameScreen implements Screen{
 
 
         if (showVictoryPlate) {
-            // Centraliza a placa na tela
+           
             victoryPlateGui.showVictoryPlate();
         }
 
 
 
 
-        //desenhar a barra de vida do boss
+
         for (GameObject obj : objects) {
             if(obj.isEnemytrashBoss) {
 
@@ -452,11 +454,11 @@ public class GameScreen implements Screen{
         if (showTutorial) {
             float buttonWidth = 30f;
             float buttonHeight = 30f;
-            float yOffset = -20f; // Ajuste a altura aqui
+            float yOffset = -20f;
             
-            // Botão ESQUERDO (A)
-            float leftX = player.getX() + 25f; // 20px da borda esquerda do player
-            float rightX = player.getX() + player.getWidth() - 65f; // 70px da borda direita (50 do botão + 20 de margem)
+
+            float leftX = player.getX() + 25f; 
+            float rightX = player.getX() + player.getWidth() - 65f; 
             float yPos = player.getY() + player.getHeight() + yOffset;
             
             batch.draw(textureMain.pressKeyLeftTexture, leftX, yPos, buttonWidth, buttonHeight);
@@ -473,12 +475,12 @@ public class GameScreen implements Screen{
         if (showHitboxes) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
     
-            // Hitbox de renderização (sprite completa)
+            
             shapeRenderer.setColor(Color.BLUE);
             shapeRenderer.rect(player.getRectangle().x, player.getRectangle().y, 
                             player.getRectangle().width, player.getRectangle().height);
             
-            // Hitbox real de colisão
+            
             shapeRenderer.setColor(Color.RED);
             shapeRenderer.rect(player.getHitbox().x, player.getHitbox().y, 
                             player.getHitbox().width, player.getHitbox().height);
@@ -538,6 +540,7 @@ public class GameScreen implements Screen{
         spawnObject();
         killBoss = false;
         showTutorial = false;
+        freeMode = false;
     }
 
     private void spawnObject() {
@@ -556,12 +559,12 @@ public class GameScreen implements Screen{
         }
 
 
-        boss.update(deltaTime);
+        /* boss.update(deltaTime); */
 
-        if (closeBackground) {
+        /* if (closeBackground) {
             freeMode = true; // Ativa o modo livre
             objects.clear(); // Limpa todos os objetos
-        }
+        } */
 
         /* if (closeBackground) {
             freeMode = true; // Ativa o modo livre quando o background fecha
@@ -585,7 +588,7 @@ public class GameScreen implements Screen{
 
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-            showHitboxes = !showHitboxes; // Alterna entre mostrar e esconder hitboxes
+            showHitboxes = !showHitboxes; 
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -597,7 +600,6 @@ public class GameScreen implements Screen{
         }
 
         if (showTutorial) {
-            // Desativa APENAS no momento em que A ou D forem pressionados
             if (Gdx.input.isKeyJustPressed(Input.Keys.A) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
                 showTutorial = false;
             }
@@ -713,6 +715,18 @@ public class GameScreen implements Screen{
                         ambientacao += 5;
                         killBoss = true;
 
+
+                        if(currentBossLevel == 3){
+                            new Thread(() -> {
+                                try {
+                                    Thread.sleep(4000); 
+                                    killBoss = false;
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }).start();
+                        }
+
                         
                     
                         
@@ -720,15 +734,29 @@ public class GameScreen implements Screen{
                         currentBossLevelDeath = currentBossLevel;
 
                         if (currentBossLevel == 3 && obj.health <= 0) {
-                            //showVictoryPlate = true;
-                            //victoryPlateTimer = VICTORY_PLATE_DURATION;
+                            showVictoryPlate = true;
+                            victoryPlateTimer = VICTORY_PLATE_DURATION;
                             
                             objects.clear();
                             activeBoss = false;
 
-                            if(currentBossLevel == 3){
+                            /* if(currentBossLevel == 3){
                                 closeBackground = true;
+                            } */
+
+                            if(currentBossLevel == 3){
+                                new Thread(()->{
+                                    try {
+                                        Thread.sleep(4000); 
+                                        gameOver = true;
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }).start();
                             }
+
+                            
+                            
 
                             
                         }
@@ -742,21 +770,21 @@ public class GameScreen implements Screen{
         if(score == 20 && !activeBoss){
             System.out.println("Boss ativado");
             objects.clear();
-            spawnBoss(50, 50, 1);
+            spawnBoss(100, 100, 1);
             activeBoss = true;
         }
 
         if(score == 80 && !activeBoss){
             System.out.println("Boss ativado");
             objects.clear();
-            spawnBoss(50, 50, 2);
+            spawnBoss(150, 150, 2);
             activeBoss = true;
         }
 
         if(score == 150 && !activeBoss){
             System.out.println("Boss ativado");
             objects.clear();
-            spawnBoss(50, 50, 3);
+            spawnBoss(200, 200, 3);
             activeBoss = true;
         }
 
@@ -856,12 +884,12 @@ public class GameScreen implements Screen{
 
                     if (ambientacao % speedIncreaseIntervalFundo == 0 && atualSpeedFundo < maxSpeedFundo) {
                         atualSpeedFundo = objectSpeedFundo + (ambientacao / speedIncreaseIntervalFundo) * speedIncreaseAmountFundo;
-                        currentObjectSpeedFundo = atualSpeedFundo; // Atualiza a velocidade atual do fundo
+                        currentObjectSpeedFundo = atualSpeedFundo; 
                     }
 
                     if (ambientacao % speedIncreaseIntervalFundoLonge == 0 && atualSpeedFundoLonge < maxSpeedFundoLonge) {
                         atualSpeedFundoLonge = objectSpeedFundoLonge + (ambientacao / speedIncreaseIntervalFundoLonge) * speedIncreaseAmountFundoLonge;
-                        currentObjectSpeedFundoLonge = atualSpeedFundoLonge; // Atualiza a velocidade atual do fundo
+                        currentObjectSpeedFundoLonge = atualSpeedFundoLonge; 
                     }
 
                 } else if (obj.isEnemy) {
@@ -912,6 +940,7 @@ public class GameScreen implements Screen{
         pause();
         // This method is called when another screen replaces this one.
     }
+
 
     @Override
     public void dispose() {

@@ -54,7 +54,7 @@ public class TextDeathBoss {
         }
 
 
-        float plateWidth = 300; // Aumenta o tamanho
+        float plateWidth = 300; 
         float plateHeight = 450;
         float x = (Gdx.graphics.getWidth() - plateWidth) / 2;
         float y = (Gdx.graphics.getHeight() - plateHeight) / 2.5f;

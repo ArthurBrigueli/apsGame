@@ -36,17 +36,17 @@ public class Player {
 
     private boolean isTouchedByFire = false;
     private float touchFireTimer = 0f;
-    private final float TOUCH_FIRE_DURATION = 0.1f; // Tempo que o efeito dura
+    private final float TOUCH_FIRE_DURATION = 0.1f; 
 
 
 
-    private float baseHeight;  // Altura base sem modificações
+    private float baseHeight;  
     private float currentHeightModifier = 1f;
 
 
 
     //---
-    private Rectangle hitbox; // Nova hitbox ajustada
+    private Rectangle hitbox; 
     private float hitboxYOffset;
 
 
@@ -60,16 +60,16 @@ public class Player {
 
     private boolean isAtackAnimationPlaying;
     private float atackAnimationTimer;
-    private final float ATACK_ANIMATION_DURATION = 0.5f; // Duração da animação de ataque
+    private final float ATACK_ANIMATION_DURATION = 0.5f;
     private boolean freeMode;
 
 
 
     private boolean isReturning = false;
-    private float returnSpeed = 300f; // pixels por segundo
-    private float startReturnX; // Posição inicial do retorno
-    private float returnProgress = 0f; // Progresso da animação (0 a 1)
-    private final float RETURN_DURATION = 0.5f; // Duração em segundos
+    private float returnSpeed = 300f; 
+    private float startReturnX; 
+    private float returnProgress = 0f;
+    private final float RETURN_DURATION = 0.5f; 
 
     private boolean lastDirectionLeft = false;
 
@@ -80,9 +80,9 @@ public class Player {
         this.rectangle = new Rectangle(x, y, tamPlayerW, tamPlayerH);
 
 
-        float hitboxWidth = tamPlayerW * 0.5f; // Largura reduzida em 20%
-        float hitboxHeight = tamPlayerH * 0.45f; // Altura reduzida em 30%
-        this.hitboxYOffset = tamPlayerH * 0.01f; // Deslocamento para baixo em 15% da altura
+        float hitboxWidth = tamPlayerW * 0.5f; 
+        float hitboxHeight = tamPlayerH * 0.45f; 
+        this.hitboxYOffset = tamPlayerH * 0.01f; 
         this.hitbox = new Rectangle(x, y + hitboxYOffset, hitboxWidth, hitboxHeight);
 
 
@@ -111,7 +111,7 @@ public class Player {
     public void atack() {
         isAtackAnimationPlaying = true;
         atackAnimationTimer = ATACK_ANIMATION_DURATION;
-        stateTime = 0f; // Reseta o tempo da animação
+        stateTime = 0f; 
     }
 
     private void initializeAnimations() {
@@ -123,8 +123,8 @@ public class Player {
     }
 
     private void updateHitboxPosition() {
-        // Atualiza a posição da hitbox sempre que o retângulo principal for alterado
-        hitbox.x = rectangle.x + (rectangle.width - hitbox.width) / 2; // Centraliza horizontalmente
+       
+        hitbox.x = rectangle.x + (rectangle.width - hitbox.width) / 2; 
         hitbox.y = rectangle.y + hitboxYOffset;
     }
 
@@ -217,7 +217,7 @@ public class Player {
     public void moveRight() {
         isMovingRight = true;
         isMovingLeft = false;
-        lastDirectionLeft = false; // Guarda que estava olhando para direita
+        lastDirectionLeft = false; 
         rectangle.x += 5;
     }
 
@@ -225,7 +225,7 @@ public class Player {
     public void moveLeft() {
         isMovingLeft = true;
         isMovingRight = false;
-        lastDirectionLeft = true; // Guarda que estava olhando para esquerda
+        lastDirectionLeft = true; 
         rectangle.x -= 5;
     }
 
@@ -253,14 +253,14 @@ public class Player {
         if (isReturning) {
             returnProgress += deltaTime / RETURN_DURATION;
             
-            // Interpolação linear
+            
             rectangle.x = startReturnX + (210 - startReturnX) * Math.min(1, returnProgress);
             
-            // Quando completar
+            
             if (returnProgress >= 1f) {
-                rectangle.x = 210; // Garante posição exata
+                rectangle.x = 210; 
                 isReturning = false;
-                freeMode = false; // Se necessário
+                freeMode = false;
             }
         }
 
@@ -283,7 +283,7 @@ public class Player {
             if (touchFireTimer <= 0) {
                 rectangle.height = originalHeight;
                 isTouchedByFire = false;
-                if (!isSlide) { // Só volta ao normal se não estiver deslizando
+                if (!isSlide) { 
                     currentHeightModifier = 1f;
                     updateHeight();
                 }
@@ -295,12 +295,12 @@ public class Player {
 
         if (rectangle.y == GROUND_Y && !isSlide) {
             if (!isRunning && !gameOver) {
-                runningSoundId = runSound.loop(0.5f); // Toca em loop (30% volume)
+                runningSoundId = runSound.loop(0.5f);
                 isRunning = true;
             }
         } else {
             if (isRunning) {
-                runSound.stop(runningSoundId); // Para o som
+                runSound.stop(runningSoundId);
                 isRunning = false;
             }
         }
@@ -310,7 +310,7 @@ public class Player {
 
     public void touchFire() {
         if (!isTouchedByFire) {
-            currentHeightModifier = 1.3f; // Dobra a altura
+            currentHeightModifier = 1.3f; 
             updateHeight();
             isTouchedByFire = true;
             touchFireTimer = TOUCH_FIRE_DURATION;
@@ -334,7 +334,7 @@ public class Player {
     public void slide(){
         if(!isSlide) {
             isSlide = true;
-            currentHeightModifier = 0.5f; // Metade da altura
+            currentHeightModifier = 0.5f; 
             updateHeight();
         }
     }
@@ -342,15 +342,15 @@ public class Player {
     public void closeSlide() {
         if (isSlide) {
             isSlide = false;
-            currentHeightModifier = isTouchedByFire ? 1.5f : 1f; // Volta para 2x se estiver com fire, senão 1x
+            currentHeightModifier = isTouchedByFire ? 1.5f : 1f;
             updateHeight();
         }
     }
 
     private void updateHeight() {
         rectangle.height = baseHeight * currentHeightModifier;
-        hitbox.height = rectangle.height * 0.45f; // Mantém proporção da hitbox
-        hitboxYOffset = rectangle.height * 0.01f; // Ajusta offset proporcionalmente
+        hitbox.height = rectangle.height * 0.45f; 
+        hitboxYOffset = rectangle.height * 0.01f; 
         updateHitboxPosition();
     }
 
@@ -375,7 +375,7 @@ public class Player {
     public TextureRegion getCurrentFrame() {
         TextureRegion frame;
         
-        // Verifica pulo primeiro (tem prioridade sobre tudo)
+       
         if (isJumpAnimationPlaying && rectangle.y > GROUND_Y) {
             frame = new TextureRegion(jumpAnimation.getKeyFrame(stateTime, false));
             if (lastDirectionLeft) {
@@ -395,7 +395,7 @@ public class Player {
                 }
                 return frame;
             } else {
-                // Frame parado mantendo última direção
+                
                 frame = new TextureRegion(WalkAnimation.getKeyFrames()[0]);
                 if (lastDirectionLeft) {
                     frame.flip(true, false);
@@ -404,7 +404,7 @@ public class Player {
             }
         }
     
-        // Restante das animações normais
+       
         if (isAtackAnimationPlaying) {
             frame = new TextureRegion(AtackAnimation.getKeyFrame(stateTime, false));
             if (lastDirectionLeft) {
@@ -422,7 +422,6 @@ public class Player {
             return frame;
         } else {
             frame = new TextureRegion(runAnimation.getKeyFrame(stateTime, true));
-            // Sempre olha para a direita no modo run
             lastDirectionLeft = false;
             return frame;
         }

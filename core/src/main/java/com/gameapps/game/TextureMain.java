@@ -49,7 +49,7 @@ public class TextureMain {
     private void loadTexture(){
 
 
-        //devil boss
+
         bossDevilTexture = new Texture("bossDevil/idle/devil_idle_0001.png");
 
 

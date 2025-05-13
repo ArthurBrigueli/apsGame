@@ -20,7 +20,7 @@ public class VictoryPlateGui {
 
 
     public void showVictoryPlate(){
-        float plateWidth = 300; // Aumenta o tamanho
+        float plateWidth = 300;
         float plateHeight = 150;
         float x = (Gdx.graphics.getWidth() - plateWidth) / 2;
         float y = (Gdx.graphics.getHeight() - plateHeight) - 100;
